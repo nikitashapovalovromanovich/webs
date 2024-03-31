@@ -15,7 +15,7 @@
         body {
             font-family: 'Montserrat', sans-serif;
             font-weight: 200;
-            color: #333; /* Dark grey text color */
+            color: #333; 
             background-image: url('https://github.com/nikitashapovalovromanovich/webs/blob/main/jpg/photo_font.jpg?raw=true');
             background-size: cover;
             display: flex;
@@ -29,29 +29,50 @@
             max-width: 600px;
             margin: auto;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
-            border-radius: 10px; /* Rounded corners */
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            background-color: rgba(255, 255, 255, 0.9); 
+            border-radius: 10px; 
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
         }
 
         h1 {
             margin-top: 50px;
             margin-bottom: 20px;
             font-size: 2.5rem;
-            color: hsl(122, 68%, 42%); /* Green header text color */
+            color: hsl(122, 68%, 42%); 
         }
 
         img {
             width: 150px;
             margin: 30px auto;
             border-radius: 50%; /* Rounded logo image */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
         }
 
         p {
             margin-bottom: 30px;
             font-size: 1.2rem;
             color: #352d2d; /* Medium grey text color */
+        }
+
+        .product {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .product-item {
+            margin: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 250px; /* Increased width for better presentation */
+        }
+
+        .product-item img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
 
         button {
@@ -104,76 +125,80 @@
         <p style="color: #1d1b1b;"><strong>Вітаємо у нашому онлайн магазині!</strong></p>
         <p>Обирайте книги за найкращими цінами 📚</p>
         <button id="buy">Купити</button>
+
     </div>
-    <form id="form">
-        <input type="text" placeholder="Ім'я" id="user_name">
-        <input type="text" placeholder="Email" id="user_email">
-        <input type="text" placeholder="Телефон" id="user_phone">
-        <div id="error"></div> 
-        <button id="order" type="submit">Зареєструватись</button>
-    </form>
+    <div id="catalog" style="display:none;">
+        <h1>Каталог товарів</h1>
+        <div class="product">
+            <div class="product-item">
+                <img src="https://example.com/book1.jpg" alt="Книга 1">
+                <p>Назва книги 1</p>
+                <button class="buy">Купити</button>
+            </div>
+            <div class="product-item">
+                <img src="https://example.com/book2.jpg" alt="Книга 2">
+                <p>Назва книги 2</p>
+                <button class="buy">Купити</button>
+            </div>
+            <!-- Додайте інші товари з аналогічною структурою -->
+        </div>
+    </div>
+    <div id="form" style="display:none;">
+        <form id="order-form">
+            <input type="text" placeholder="Ім'я" id="user_name">
+            <input type="text" placeholder="Email" id="user_email">
+            <input type="text" placeholder="Телефон" id="user_phone">
+            <div id="error"></div> 
+            <button id="order" type="submit">Оформити</button>
+        </form>
+    </div>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp;
         let buy = document.getElementById("buy");
-        let order = document.getElementById("order");
+        let catalog = document.getElementById("catalog");
+        let form = document.getElementById("form");
         tg.expand();
     
         buy.addEventListener("click", () => {
             document.getElementById("main").style.display = "none";
-            document.getElementById("form").style.display = "block";
+            catalog.style.display = "block";
             document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
         });
     
-        order.addEventListener("click", (event) => {
-    event.preventDefault();
+        document.getElementById("catalog").addEventListener("click", () => {
+            catalog.style.display = "none";
+            form.style.display = "block";
+        });
 
-    document.getElementById("error").innerText = '';
-    let name = document.getElementById("user_name").value;
-    let email = document.getElementById("user_email").value;
-    let phone = document.getElementById("user_phone").value;
-    if (name.length < 5) {
-        document.getElementById("error").innerText = 'Ви зробили помилку в імені';
-        return;
-    }
-    if (email.length < 5) {
-        document.getElementById("error").innerText = 'Ви зробили помилку в email';
-        return;
-    }
-    if (phone.length < 5) {
-        document.getElementById("error").innerText = 'Ви зробили помилку в номері телефона';
-        return;
-    }
-    
-        let data = {
-            name: name,
-            email: email,
-            phone: phone
-        };
-    // Відправка даних на сервер
-    fetch('https://t.me/Refuels', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-})
-.then(response => {
-    if (response.ok) {
-        return response.json();
-    }
-    throw new Error('Помилка відправки даних на сервер.');
-})
-.then(data => {
-    // Обробка успішної відправки
-    window.location.href = "https://www.litres.ru/audiobook/stiven-king/institut-51792214/";
-})
-.catch(error => {
-    console.error('Помилка відправки даних на сервер:', error);
-    // Обробка помилок
-});
+        document.getElementById("form").addEventListener("submit", (event) => {
+            event.preventDefault();
 
-});
+            document.getElementById("error").innerText = '';
+            let name = document.getElementById("user_name").value;
+            let email = document.getElementById("user_email").value;
+            let phone = document.getElementById("user_phone").value;
+            if (name.length < 5) {
+                document.getElementById("error").innerText = 'Ви зробили помилку в імені';
+                return;
+            }
+            if (email.length < 5) {
+                document.getElementById("error").innerText = 'Ви зробили помилку в email';
+                return;
+            }
+            if (phone.length < 5) {
+                document.getElementById("error").innerText = 'Ви зробили помилку в номері телефона';
+                return;
+            }
+            
+            let data = {
+                name: name,
+                email: email,
+                phone: phone
+            };
+            tg.sendData(JSON.stringify(data))
+            tg.close()
+        });
     </script>
 </body>
 </html>
