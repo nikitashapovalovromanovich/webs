@@ -105,7 +105,7 @@
         <p>Обирайте книги за найкращими цінами 📚</p>
         <button id="buy">Купити</button>
     </div>
-    <form id="form" action="https://www.litres.ru/popular/">
+    <form id="form">
         <input type="text" placeholder="Ім'я" id="user_name">
         <input type="text" placeholder="Email" id="user_email">
         <input type="text" placeholder="Телефон" id="user_phone">
@@ -150,9 +150,16 @@
             email: email,
             phone: phone
         };
-        tg.sendData(JSON.stringify(data)); 
-        
-    
+    // Відправка даних на сервер
+    tg.sendData(JSON.stringify(data))
+        .then(() => {
+            // Якщо відправка успішна, переадресувати користувача на нову сторінку
+            window.location.href = "https://www.litres.ru/audiobook/stiven-king/institut-51792214/";
+        })
+        .catch((error) => {
+            console.error('Помилка відправки даних на сервер:', error);
+            // Тут можна додати обробку помилок, якщо відправка не вдалася
+        });
 });
     </script>
 </body>
