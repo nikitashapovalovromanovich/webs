@@ -132,22 +132,25 @@
     let phone = document.getElementById("user_phone").value;
     if (name.length < 5) {
         document.getElementById("error").innerText = 'Ви зробили помилку в імені';
+        return;
     }
-    else if (email.length < 5) {
+    if (email.length < 5) {
         document.getElementById("error").innerText = 'Ви зробили помилку в email';
+        return;
     }
-    else if (phone.length < 5) {
+    if (phone.length < 5) {
         document.getElementById("error").innerText = 'Ви зробили помилку в номері телефона';
+        return;
     }
-    else {
+    
         let data = {
             name: name,
             email: email,
             phone: phone
         };
-        tg.sendData(JSON.stringify(data)); // Виправлена частина коду
+        tg.sendData(JSON.stringify(data)); 
         tg.close();
-    }
+    
 });
     </script>
 </body>
