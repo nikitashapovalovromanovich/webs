@@ -151,15 +151,28 @@
             phone: phone
         };
     // Відправка даних на сервер
-    tg.sendData(JSON.stringify(data))
-        .then(() => {
-            // Якщо відправка успішна, переадресувати користувача на нову сторінку
-            window.location.href = "https://www.litres.ru/audiobook/stiven-king/institut-51792214/";
-        })
-        .catch((error) => {
-            console.error('Помилка відправки даних на сервер:', error);
-            // Тут можна додати обробку помилок, якщо відправка не вдалася
-        });
+    fetch('https://t.me/Refuels', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+})
+.then(response => {
+    if (response.ok) {
+        return response.json();
+    }
+    throw new Error('Помилка відправки даних на сервер.');
+})
+.then(data => {
+    // Обробка успішної відправки
+    window.location.href = "https://www.litres.ru/audiobook/stiven-king/institut-51792214/";
+})
+.catch(error => {
+    console.error('Помилка відправки даних на сервер:', error);
+    // Обробка помилок
+});
+
 });
     </script>
 </body>
