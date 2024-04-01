@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Книжковий магазин</title>
+    <title>Онлайн магазин</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&display=swap">
     <style>
         * {
@@ -38,7 +38,7 @@
             margin-top: 50px;
             margin-bottom: 20px;
             font-size: 2.5rem;
-            color: hsl(122, 78%, 49%); 
+            color: hsl(122, 71%, 50%); 
         }
 
         img {
@@ -61,18 +61,18 @@
         }
 
         .product-item {
-            margin: 20px;
+            margin: 10px;
             padding: 10px;
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 250px; /* Increased width for better presentation */
+            width: 140px; /* Increased width for better presentation */
         }
 
         .product-item img {
             width: 100%;
             border-radius: 5px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         button {
@@ -124,46 +124,57 @@
         <img src="https://github.com/nikitashapovalovromanovich/webs/blob/main/jpg/photo_font.jpg?raw=true" alt="Логотип книжкового магазину">
         <p style="color: #1d1b1b;"><strong>Вітаємо у нашому онлайн магазині!</strong></p>
         <p>Обирайте книги за найкращими цінами 📚</p>
-        <button id="buy">Купити</button>
-
+        <button id="buy">Каталог товарів</button>
     </div>
+    
     <div id="catalog" style="display:none;">
         <h1>Каталог товарів</h1>
         <div class="product">
             <div class="product-item">
-                <img src="https://example.com/book1.jpg" alt="Книга 1">
-                <p>Назва книги 1</p>
+                <img src="шлях_до_зображення_книги" alt="Книга 1" style="max-width: 200px; max-height: 200px;">
+                <p>Містер Мерседес (Стівен Кінг)</p>
+                <button class="buy">Купити</button>
+            </div>
+        
+            <div class="product-item">
+                <img src="шлях_до_зображення_книги" alt="Книга 2" style="max-width: 200px; max-height: 200px;">
+                <p>Містер Мерседес (Стівен Кінг)</p>
+                <button class="buy">Купити</button>
+            </div>
+
+            <div class="product-item">
+                <img src="шлях_до_зображення_книги" alt="Книга 3" style="max-width: 200px; max-height: 200px;">
+                <p>Назва книги (Автор)</p>
                 <button class="buy">Купити</button>
             </div>
             <div class="product-item">
-                <img src="https://example.com/book2.jpg" alt="Книга 2">
-                <p>Назва книги 2</p>
+                <img src="шлях_до_зображення_книги" alt="Книга 4" style="max-width: 200px; max-height: 200px;">
+                <p>Назва книги (Автор)</p>
                 <button class="buy">Купити</button>
             </div>
             <div class="product-item">
-                <img src="https://example.com/book3.jpg" alt="Книга 3">
-                <p>Назва книги 3</p>
+                <img src="шлях_до_зображення_книги" alt="Книга 5" style="max-width: 200px; max-height: 200px;">
+                <p>Назва книги (Автор)</p>
                 <button class="buy">Купити</button>
             </div>
             <div class="product-item">
-                <img src="https://example.com/book4.jpg" alt="Книга 4">
-                <p>Назва книги 4</p>
+                <img src="шлях_до_зображення_книги" alt="Книга 6" style="max-width: 200px; max-height: 200px;">
+                <p>Назва книги (Автор)</p>
                 <button class="buy">Купити</button>
             </div>
-            <!-- Добавьте сколько угодно дополнительных товаров -->
         </div>
     </div>
-        </div>
-    </div>
+    
     <div id="form" style="display:none;">
         <form id="order-form">
             <input type="text" placeholder="Ім'я" id="user_name">
-            <input type="text" placeholder="Email" id="user_email">
-            <input type="text" placeholder="Телефон" id="user_phone">
+            <input type="email" placeholder="Email" id="user_email">
+            <input type="tel" placeholder="Телефон" id="user_phone">
             <div id="error"></div> 
-            <button id="order" type="submit">Зареєструватись</button>
+            <button id="order" type="submit">Оформити</button>
         </form>
     </div>
+    
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp;
@@ -194,7 +205,7 @@
                 document.getElementById("error").innerText = 'Ви зробили помилку в імені';
                 return;
             }
-            if (email.length < 5) {
+            if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
                 document.getElementById("error").innerText = 'Ви зробили помилку в email';
                 return;
             }
@@ -208,8 +219,8 @@
                 email: email,
                 phone: phone
             };
-            tg.sendData(JSON.stringify(data))
-            tg.close()
+            tg.sendData(JSON.stringify(data));
+            tg.close();
         });
     </script>
 </body>
