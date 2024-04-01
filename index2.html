@@ -193,6 +193,7 @@
                 <button class="buy">Купити</button>
             </div>
         </div>
+        <button id="previousPage">Перейти на попередню сторінку</button>
     </div>
     <div id="form" style="display:none;">
         <form id="order-form">
@@ -210,6 +211,7 @@
         let buy = document.querySelectorAll(".buy");
         let catalog = document.getElementById("main");
         let form = document.getElementById("form");
+        let previousPageButton = document.getElementById("previousPage");
         tg.expand();
     
         buy.forEach(btn => {
@@ -218,6 +220,11 @@
                 form.style.display = "block";
                 document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
             });
+        });
+
+        previousPageButton.addEventListener("click", () => {
+            // Зміна URL після натискання на кнопку "Попередня сторінка"
+            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
         });
 
         document.getElementById("form").addEventListener("submit", (event) => {
@@ -251,5 +258,3 @@
     </script>
 </body>
 </html>
-
-
