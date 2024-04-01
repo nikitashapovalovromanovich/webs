@@ -116,6 +116,43 @@
             color: red; /* Червоний колір тексту */
             font-weight: bold; /* Жирний шрифт */
         }
+
+        /* Media queries for responsive design */
+        @media (max-width: 768px) {
+            #main {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            img {
+                width: 100px;
+            }
+            .product-item {
+                width: 120px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #main {
+                padding: 5px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            img {
+                width: 80px;
+            }
+            .product-item {
+                width: 100px;
+            }
+            button {
+                font-size: 1rem;
+            }
+            input {
+                width: 90%;
+            }
+        }
     </style>
 </head>
 <body>
