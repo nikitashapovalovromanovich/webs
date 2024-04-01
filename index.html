@@ -36,11 +36,15 @@
         }
 
         h1 {
-            margin-top: 50px;
-            margin-bottom: 20px;
-            font-size: 2.5rem;
-            color: #2623df; 
+        margin-top: 50px;
+        margin-bottom: 20px;
+        font-size: 2.5rem;
+        color: #0ce730;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тінь для підсилення контрастності */
+        font-family: Arial, sans-serif; /* Шрифт, щоб забезпечити широку підтримку */
+        text-align: center; /* Центрування тексту */
         }
+
 
         img {
             width: 150px;
@@ -63,13 +67,30 @@
         }
 
         .product-item {
-            margin: 10px;
-            padding: 10px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 200px; 
-        }
+        margin: 10px;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 200px;
+        position: relative; /* Додаємо відносне позиціонування */
+        height: 350px; /* Змінюємо висоту блоку товару */
+}
+
+    .product-item p {
+        margin-bottom: 10px;
+        font-size: 0.8rem;
+        color: #333;
+        font-weight: 500;
+    }
+
+    .product-item button.buy {
+        position: absolute; /* Змінюємо на абсолютне позиціонування */
+        bottom: 10px; /* Відстань від нижнього краю */
+        left: 50%; /* Центруємо по горизонталі */
+        transform: translateX(-50%); /* Центруємо по горизонталі */
+    }
+
 
         .product-item img {
             width: 100%;
@@ -161,35 +182,36 @@
         <h1>Каталог товарів</h1>
         <div class="product">
             <div class="product-item">
-                <img src="https://github.com/nikitashapovalovromanovich/webs/blob/main/jpg/img324_93.jpg" alt="Книга 1">
-                <p>Містер Мерседес (Стівен Кінг)</p>
+                <img src="https://raw.githubusercontent.com/nikitashapovalovromanovich/webs/main/jpg/img794_2_16_1.jpg" alt="Книга 1">
+                <p>Смерть-діло самотнє<p><p style="font-size: 0.7rem;">(Рей Бредбері)</p>
+
                 <button class="buy">Купити</button>
             </div>
         
             <div class="product-item">
-                <img src="шлях_до_зображення_книги" alt="Книга 2">
-                <p>Містер Мерседес (Стівен Кінг)</p>
+                <img src="https://raw.githubusercontent.com/nikitashapovalovromanovich/webs/main/jpg/img324_93.jpg" alt="Книга 2">
+                <p>Містер Мерседес<p><p style="font-size: 0.7rem;margin-top: 25px;">(Стівен Кінг)</p>
                 <button class="buy">Купити</button>
             </div>
 
             <div class="product-item">
-                <img src="шлях_до_зображення_книги" alt="Книга 3">
-                <p>Містер Мерседес (Стівен Кінг)</p>
+                <img src="https://raw.githubusercontent.com/nikitashapovalovromanovich/webs/main/jpg/45421_68990_8.jpg" alt="Книга 3">
+                <p>Дюна<p><p style="font-size: 0.7rem;margin-top: 35px;">(Френк Герберт)</p>
                 <button class="buy">Купити</button>
             </div>
             <div class="product-item">
-                <img src="шлях_до_зображення_книги" alt="Книга 4">
-                <p>Назва книги (Автор)</p>
+                <img src="https://raw.githubusercontent.com/nikitashapovalovromanovich/webs/main/jpg/54801_103037_1_1.jpg" alt="Книга 4">
+                <p>Смерть у хмарах<p><p style="font-size: 0.7rem;margin-top: 20px;">(Агата Крісті)</p>
                 <button class="buy">Купити</button>
             </div>
             <div class="product-item">
-                <img src="шлях_до_зображення_книги" alt="Книга 5">
-                <p>Назва книги (Автор)</p>
+                <img src="https://raw.githubusercontent.com/nikitashapovalovromanovich/webs/main/jpg/Getsbi.png" alt="Книга 5">
+                <p>Великий Гетсбі<p><p style="font-size: 0.7rem;margin-top: 1px;">(Френсіс Скотт Фіцджеральд)</p>                         
                 <button class="buy">Купити</button>
             </div>
             <div class="product-item">
-                <img src="шлях_до_зображення_книги" alt="Книга 6">
-                <p>Назва книги (Автор)</p>
+                <img src="https://raw.githubusercontent.com/nikitashapovalovromanovich/webs/main/jpg/cover_125_42.jpg" alt="Книга 6">
+                <p>Портрет Доріана Грея<p><p style="font-size: 0.7rem;">(Оскар Уайлд)</p>
                 <button class="buy">Купити</button>
             </div>
         </div>
