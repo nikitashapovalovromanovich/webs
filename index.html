@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Онлайн магазин</title>
+    <title>Каталог товарів</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&display=swap">
     <style>
         * {
@@ -15,9 +15,10 @@
         body {
             font-family: 'Montserrat', sans-serif;
             font-weight: 200;
-            color: #333; 
+            color: #3726d8; 
             background-image: url('https://github.com/nikitashapovalovromanovich/webs/blob/main/jpg/photo_font.jpg?raw=true');
             background-size: cover;
+            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,7 +30,7 @@
             max-width: 600px;
             margin: auto;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.9); 
+            background-color: rgba(255, 255, 255, 0); 
             border-radius: 10px; 
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
         }
@@ -38,26 +39,27 @@
             margin-top: 50px;
             margin-bottom: 20px;
             font-size: 2.5rem;
-            color: hsl(122, 71%, 50%); 
+            color: #2623df; 
         }
 
         img {
             width: 150px;
             margin: 30px auto;
-            border-radius: 50%; /* Rounded logo image */
+            border-radius: 50%; 
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
         }
 
         p {
             margin-bottom: 30px;
             font-size: 1.2rem;
-            color: #352d2d; /* Medium grey text color */
+            color: #555; 
         }
 
         .product {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            margin-top: 20px;
         }
 
         .product-item {
@@ -66,38 +68,38 @@
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 140px; /* Increased width for better presentation */
+            width: 200px; 
         }
 
         .product-item img {
             width: 100%;
             border-radius: 5px;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         button {
             display: inline-block;
             border: none;
             border-radius: 5px;
-            margin-top: 30px;
-            padding: 15px 30px;
-            font-size: 1.2rem;
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
-            color: hsla(0, 5%, 12%, 0.897); /* White button text color */
-            background-color: #007bff; /* Blue button background color */
-            text-decoration: none; /* Remove underline */
-            outline: none; /* Remove outline */
+            color: #fff; 
+            background-color: #007bff; 
+            text-decoration: none; 
+            outline: none; 
         }
 
         button:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+            background-color: #0056b3; 
         }
 
         #form {
-            display: none;
             text-align: center;
+            padding: 20px;
         }
 
         input {
@@ -106,18 +108,17 @@
             margin: 10px auto;
             padding: 10px;
             border-radius: 5px;
-            border: 1px solid #ccc; /* Light grey border */
+            border: 1px solid #ccc; 
             font-size: 1rem;
-            outline: none; /* Remove outline */
+            outline: none; 
         }
 
-        /* Corrected style for paragraph */
         #error {
-            color: red; /* Червоний колір тексту */
-            font-weight: bold; /* Жирний шрифт */
+            color: red; 
+            font-weight: bold; 
+            margin-top: 10px;
         }
 
-        /* Media queries for responsive design */
         @media (max-width: 768px) {
             #main {
                 padding: 10px;
@@ -129,7 +130,7 @@
                 width: 100px;
             }
             .product-item {
-                width: 120px;
+                width: 150px;
             }
         }
 
@@ -144,10 +145,10 @@
                 width: 80px;
             }
             .product-item {
-                width: 100px;
+                width: 120px;
             }
             button {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
             input {
                 width: 90%;
@@ -157,51 +158,43 @@
 </head>
 <body>
     <div id="main">
-        <h1>Онлайн магазин</h1>
-        <img src="https://github.com/nikitashapovalovromanovich/webs/blob/main/jpg/photo_font.jpg?raw=true" alt="Логотип книжкового магазину">
-        <p style="color: #1d1b1b;"><strong>Вітаємо у нашому онлайн магазині!</strong></p>
-        <p>Обирайте книги за найкращими цінами 📚</p>
-        <button id="buy">Каталог товарів</button>
-    </div>
-    
-    <div id="catalog" style="display:none;">
         <h1>Каталог товарів</h1>
         <div class="product">
             <div class="product-item">
-                <img src="шлях_до_зображення_книги" alt="Книга 1" style="max-width: 200px; max-height: 200px;">
+                <img src="шлях_до_зображення_книги" alt="Книга 1">
                 <p>Містер Мерседес (Стівен Кінг)</p>
                 <button class="buy">Купити</button>
             </div>
         
             <div class="product-item">
-                <img src="шлях_до_зображення_книги" alt="Книга 2" style="max-width: 200px; max-height: 200px;">
+                <img src="шлях_до_зображення_книги" alt="Книга 2">
                 <p>Містер Мерседес (Стівен Кінг)</p>
                 <button class="buy">Купити</button>
             </div>
 
             <div class="product-item">
-                <img src="шлях_до_зображення_книги" alt="Книга 3" style="max-width: 200px; max-height: 200px;">
+                <img src="шлях_до_зображення_книги" alt="Книга 3">
+                <p>Містер Мерседес (Стівен Кінг)</p>
+                <button class="buy">Купити</button>
+            </div>
+            <div class="product-item">
+                <img src="шлях_до_зображення_книги" alt="Книга 4">
                 <p>Назва книги (Автор)</p>
                 <button class="buy">Купити</button>
             </div>
             <div class="product-item">
-                <img src="шлях_до_зображення_книги" alt="Книга 4" style="max-width: 200px; max-height: 200px;">
+                <img src="шлях_до_зображення_книги" alt="Книга 5">
                 <p>Назва книги (Автор)</p>
                 <button class="buy">Купити</button>
             </div>
             <div class="product-item">
-                <img src="шлях_до_зображення_книги" alt="Книга 5" style="max-width: 200px; max-height: 200px;">
-                <p>Назва книги (Автор)</p>
-                <button class="buy">Купити</button>
-            </div>
-            <div class="product-item">
-                <img src="шлях_до_зображення_книги" alt="Книга 6" style="max-width: 200px; max-height: 200px;">
+                <img src="шлях_до_зображення_книги" alt="Книга 6">
                 <p>Назва книги (Автор)</p>
                 <button class="buy">Купити</button>
             </div>
         </div>
+        <button id="nextPage">Перейти на наступну сторінку</button>
     </div>
-    
     <div id="form" style="display:none;">
         <form id="order-form">
             <input type="text" placeholder="Ім'я" id="user_name">
@@ -215,20 +208,23 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp;
-        let buy = document.getElementById("buy");
-        let catalog = document.getElementById("catalog");
+        let buy = document.querySelectorAll(".buy");
+        let catalog = document.getElementById("main");
         let form = document.getElementById("form");
+        let nextPageButton = document.getElementById("nextPage");
         tg.expand();
     
-        buy.addEventListener("click", () => {
-            document.getElementById("main").style.display = "none";
-            catalog.style.display = "block";
-            document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
+        buy.forEach(btn => {
+            btn.addEventListener("click", () => {
+                catalog.style.display = "none";
+                form.style.display = "block";
+                document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
+            });
         });
-    
-        document.getElementById("catalog").addEventListener("click", () => {
-            catalog.style.display = "none";
-            form.style.display = "block";
+
+        previousPageButton.addEventListener("click", () => {
+            // Зміна URL після натискання на кнопку "Попередня сторінка"
+            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index2.html";
         });
 
         document.getElementById("form").addEventListener("submit", (event) => {
