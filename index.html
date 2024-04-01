@@ -222,12 +222,12 @@
             });
         });
 
-        previousPageButton.addEventListener("click", () => {
-            // Зміна URL після натискання на кнопку "Попередня сторінка"
+        nextPageButton.addEventListener("click", () => {
+            // Зміна URL після натискання на кнопку "Перейти на наступну сторінку"
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index2.html";
         });
 
-        document.getElementById("form").addEventListener("submit", (event) => {
+        document.getElementById("order-form").addEventListener("submit", (event) => {
             event.preventDefault();
 
             document.getElementById("error").innerText = '';
