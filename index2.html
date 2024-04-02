@@ -139,6 +139,7 @@
             font-weight: bold; 
             margin-top: 10px;
         }
+        
 
         @media (max-width: 768px) {
             #main {
@@ -175,6 +176,7 @@
                 width: 90%;
             }
         }
+
     </style>
 </head>
 <body>
@@ -216,14 +218,6 @@
         </div>
         <button id="previousPage">Перейти на попередню сторінку</button>
     </div>
-    <div id="form" style="display:none;">
-        <form id="order-form">
-            <input type="text" placeholder="Ім'я" id="user_name">
-            <input type="email" placeholder="Email" id="user_email">
-            <input type="tel" placeholder="Телефон" id="user_phone">
-            <div id="error"></div> 
-            <button id="order" type="submit">Оформити</button>
-        </form>
     </div>
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -234,47 +228,17 @@
         let form = document.getElementById("form");
         let previousPageButton = document.getElementById("previousPage");
         tg.expand();
-    
+
         buy.forEach(btn => {
-            btn.addEventListener("click", () => {
-                catalog.style.display = "none";
-                form.style.display = "block";
-                document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
-            });
-        });
+    btn.addEventListener("click", () => {
+        // Відкриття нового сайту
+        window.open("https://www.yakaboo.ua/smert-dilo-samotne.html");
+    });
+});
 
         previousPageButton.addEventListener("click", () => {
             // Зміна URL після натискання на кнопку "Попередня сторінка"
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
-        });
-
-        document.getElementById("form").addEventListener("submit", (event) => {
-            event.preventDefault();
-
-            document.getElementById("error").innerText = '';
-            let name = document.getElementById("user_name").value;
-            let email = document.getElementById("user_email").value;
-            let phone = document.getElementById("user_phone").value;
-            if (name.length < 5) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в імені';
-                return;
-            }
-            if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в email';
-                return;
-            }
-            if (phone.length < 5) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в номері телефона';
-                return;
-            }
-            
-            let data = {
-                name: name,
-                email: email,
-                phone: phone
-            };
-            tg.sendData(JSON.stringify(data));
-            tg.close();
         });
     </script>
 </body>
