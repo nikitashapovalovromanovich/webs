@@ -237,46 +237,17 @@
         tg.expand();
     
         buy.forEach(btn => {
-            btn.addEventListener("click", () => {
-                catalog.style.display = "none";
-                form.style.display = "block";
-                document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
-            });
-        });
+    btn.addEventListener("click", () => {
+        // Відкриття нового сайту
+        window.open("https://www.yakaboo.ua/smert-dilo-samotne.html");
+    });
+});
 
         nextPageButton.addEventListener("click", () => {
             // Зміна URL після натискання на кнопку "Перейти на наступну сторінку"
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index2.html";
         });
 
-        document.getElementById("order-form").addEventListener("submit", (event) => {
-            event.preventDefault();
-
-            document.getElementById("error").innerText = '';
-            let name = document.getElementById("user_name").value;
-            let email = document.getElementById("user_email").value;
-            let phone = document.getElementById("user_phone").value;
-            if (name.length < 5) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в імені';
-                return;
-            }
-            if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в email';
-                return;
-            }
-            if (phone.length < 5) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в номері телефона';
-                return;
-            }
-            
-            let data = {
-                name: name,
-                email: email,
-                phone: phone
-            };
-            tg.sendData(JSON.stringify(data));
-            tg.close();
-        });
     </script>
 </body>
 </html>
