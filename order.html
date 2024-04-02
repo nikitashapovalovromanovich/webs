@@ -90,8 +90,8 @@
     <div id="main">
         <h1>Оформлення замовлення</h1>
         <form id="order-form">
-            <input type="text" placeholder="Ім'я" id="user_name" required>
-            <div class="error" id="error-name">Ви зробили помилку в імені</div>
+            <input type="text" placeholder="ПІБ" id="user_name" oninput="splitWords()" required>
+            <div class="error" id="error-name">Ви зробили помилку в ПІБ</div>
             <input type="email" placeholder="Email" id="user_email" required>
             <div class="error" id="error-email">Ви зробили помилку в email</div>
             <input type="tel" placeholder="Телефон" id="user_phone" required>
@@ -103,6 +103,16 @@
             <button id="order" type="submit">Оформити</button>
         </form>
     </div>
+
+
+    <script>
+        function splitWords() {
+            var input = document.getElementById('user_name').value;
+            var words = input.split(' ');
+            var result = words.join(' ');
+            document.getElementById('user_name').value = result;
+        }
+        </script>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
@@ -121,7 +131,7 @@
 
             clearErrors();
 
-            if (name.length < 5) {
+            if (name.length < 10) {
                 showError('error-name');
                 return;
             }
