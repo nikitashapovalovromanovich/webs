@@ -156,11 +156,9 @@
                 phone: phone
             };
 
-            // Або вивід повідомлення:
-            alert('Дані успішно відправлено!');
+            tg.sendData(JSON.stringify(data));
+            tg.close();
 
-            // Потім можна очистити форму:
-            document.getElementById("order-form").reset();
         });
 
         function returnToCart() {
