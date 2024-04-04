@@ -133,14 +133,57 @@
         // Функція для відправки даних на сервер телеграм
         function sendToTelegram(data) {
             // Ваш код для відправки даних на сервер телеграм
+            // Наприклад, ви можете використовувати AJAX або Fetch API для цього
+            // Приклад використання Fetch API:
+            fetch('https://example.com/telegram-endpoint', {
+                method: 'POST',
+                body: data,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Дані успішно відправлені на сервер телеграм');
+                } else {
+                    console.error('Помилка відправлення даних на сервер телеграм');
+                }
+            })
+            .catch(error => {
+                console.error('Помилка відправлення даних на сервер телеграм:', error);
+            });
         }
         
         // Функція для закриття з'єднання з сервером телеграм
         function closeTelegramConnection() {
             // Ваш код для закриття з'єднання з сервером телеграм
+            // Наприклад, якщо ви використовуєте WebSocket, ви можете викликати метод close() для закриття з'єднання
         }
 
-        // Функція викликається при натисканні кнопки "Повернутися до кошика"
+        // Функція викликається при натисканні кнопки "Оформити"
+        document.getElementById('order-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Перешкоджаємо відправленню форми стандартним способом
+            var name = document.getElementById('user_name').value;
+            var email = document.getElementById('user_email').value;
+            var phone = document.getElementById('user_phone').value;
+            var address = document.getElementById('user_address').value;
+            var comment = document.getElementById('order_comment').value;
+
+            var data = {
+                name: name,
+                email: email,
+                phone: phone,
+                address: address,
+                comment: comment
+            };
+
+            // Конвертуємо дані у JSON-формат
+            var jsonData = JSON.stringify(data);
+
+            // Відправляємо дані на сервер телеграм
+            sendToTelegram(jsonData);
+        });
+
         function returnToCart() {
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/cash.html";
         }
