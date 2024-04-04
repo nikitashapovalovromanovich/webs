@@ -1,50 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Title Here</title>
+    <title>Оформлення замовлення</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #3726d8;
+            background-image: url('https://github.com/nikitashapovalovromanovich/webs/raw/main/jpg/photo_font.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+        }
+
+        .total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            color: #ff0000; /* Змінений колір тексту на червоний */
+        }
+
+        #main {
+            max-width: 500px;
+            margin: auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #0ce730;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        #order-form {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: left;
+            display: none;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            outline: none;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .return-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <form id="data-form" action="https://t.me/ChooseyourbookTelegramBot" method="POST">
-        <input type="hidden" id="data-field" name="data" value="">
-    </form>
+    <div id="main">
+        <h1>Оформлення замовлення</h1>
+        <form id="order-form">
+            <input type="text" placeholder="ПІБ" id="user_name" oninput="splitWords()" required>
+            <div class="error" id="error-name">Ви зробили помилку в ПІБ</div>
+            <input type="email" placeholder="Email" id="user_email" required>
+            <div class="error" id="error-email">Ви зробили помилку в email</div>
+            <input type="tel" placeholder="Телефон" id="user_phone" required>
+            <div class="error" id="error-phone">Ви зробили помилку в номері телефона</div>
+            <textarea placeholder="Адреса доставки" id="user_address" required></textarea>
+            <div class="error" id="error-address">Ви зробили помилку в адресі доставки</div>
+            <textarea placeholder="Коментар до замовлення" id="order_comment"></textarea>
+            <div id="error"></div>
+            <button id="order" type="submit">Оформити</button>
+        </form>
+        <div class="total" id="total-order">Загальна вартість замовлення: <span id="order-total">0</span> грн</div>
+        <div class="return-button">
+            <button onclick="returnToCart()">Повернутися до кошика</button>
+        </div>
+    </div>
 
-    <ul id="items-list"></ul>
-    <p>Total: <span id="order-total"></span></p>
-    <button onclick="sendData()">Send Data</button>
 
     <script>
-        function sendData() {
-            try {
-                const data = {}; // Отримайте дані для відправлення
-                document.getElementById("data-field").value = JSON.stringify(data);
-                document.getElementById("data-form").submit();
-                alert('Дані успішно відправлені!');
-            } catch (error) {
-                console.error('Помилка при відправленні даних:', error);
-                alert('Помилка при відправленні даних!');
-            }
+        function splitWords() {
+            var input = document.getElementById('user_name').value;
+            var words = input.split(' ');
+            var result = words.join(' ');
+            document.getElementById('user_name').value = result;
         }
+        
+        // Removed Telegram related code for clarity
+        
+        document.getElementById("order-form").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            document.getElementById("error").innerText = '';
+            let name = document.getElementById("user_name").value;
+            let email = document.getElementById("user_email").value;
+            let phone = document.getElementById("user_phone").value;
+            if (name.length < 5) {
+                document.getElementById("error").innerText = 'Ви зробили помилку в імені';
+                return;
+            }
+            if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
+                document.getElementById("error").innerText = 'Ви зробили помилку в email';
+                return;
+            }
+            if (phone.length < 5) {
+                document.getElementById("error").innerText = 'Ви зробили помилку в номері телефона';
+                return;
+            }
+            
+            let data = {
+                name: name,
+                email: email,
+                phone: phone
+            };
+            // Removed Telegram related code for clarity
+        });
 
         function returnToCart() {
-            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
-        }
-
-        // Отримання кошика з локального сховища та обчислення загальної вартості
-        var кошик = localStorage.getItem("кошик");
-        if (кошик) {
-            кошик = JSON.parse(кошик);
-            var загальнаВартістьЗамовлення = 0;
-
-            кошик.forEach(function(товар) {
-                загальнаВартістьЗамовлення += товар.ціна;
-                var item = document.createElement("li");
-                item.textContent = товар.назва;
-                document.getElementById("items-list").appendChild(item);
-            });
-
-            document.getElementById("order-total").textContent = загальнаВартістьЗамовлення;
+            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/cash.html";
         }
     </script>
 </body>
