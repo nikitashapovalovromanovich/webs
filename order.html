@@ -29,7 +29,7 @@
             font-weight: bold;
             margin-top: 20px;
             text-align: center;
-            color: #ff0000; /* Змінений колір тексту на червоний */
+            color: #ff0000;
         }
 
         #main {
@@ -97,6 +97,16 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        #items-list {
+            margin-top: 20px;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        #items-list li {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -115,7 +125,7 @@
             <div id="error"></div>
             <button id="order" type="submit">Оформити</button>
         </form>
-        <div class="total" id="total-order">Загальна вартість замовлення: <span id="order-total">0</span> грн</div>
+        <div class="total" id="total-order">Загальна вартість замовлення: <span id="order-total">0.00</span> грн</div>
         <div class="return-button">
             <button onclick="returnToCart()">Повернутися до кошика</button>
         </div>
@@ -124,7 +134,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Отримання кошика з локального сховища та обчислення загальної вартості
             var кошик = localStorage.getItem("кошик");
             var загальнаВартістьЗамовлення = 0;
 
@@ -134,7 +143,6 @@
                 кошик.forEach(function(товар) {
                     загальнаВартістьЗамовлення += товар.ціна;
 
-                    // Додавання товарів до списку
                     var item = document.createElement("li");
                     item.textContent = товар.назва;
                     document.getElementById("items-list").appendChild(item);
@@ -145,53 +153,47 @@
         });
 
         document.getElementById("order-form").addEventListener("submit", function(event) {
-    event.preventDefault();
+            event.preventDefault();
 
-    // Отримання даних форми
-    var formData = {
-        name: document.getElementById("user_name").value,
-        email: document.getElementById("user_email").value,
-        phone: document.getElementById("user_phone").value,
-        address: document.getElementById("user_address").value,
-        comment: document.getElementById("order_comment").value,
-        total: parseFloat(document.getElementById("order-total").textContent)
-    };
+            var formData = {
+                name: document.getElementById("user_name").value,
+                email: document.getElementById("user_email").value,
+                phone: document.getElementById("user_phone").value,
+                address: document.getElementById("user_address").value,
+                comment: document.getElementById("order_comment").value,
+                total: parseFloat(document.getElementById("order-total").textContent)
+            };
 
-    // Отримання токену вашого бота та chat_id вашого чату
-    var token = '6825098020:AAF44cUD0rKqAApWbFyY-R7tvqmJ8wuMdyc';
-    var chatId = '-4118418632';
+            var token = '6825098020:AAF44cUD0rKqAApWbFyY-R7tvqmJ8wuMdyc';
+            var chatId = '-4118418632';
 
-    // Відправка даних на сервер Телеграму
-    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            chat_id: chatId,
-            text: JSON.stringify(formData, null, 2) // Перетворення даних форми у JSON формат для відправки
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Обробка успішної відповіді від сервера Телеграму
-        console.log('Дані успішно відправлені в Телеграм:', data);
-    })
-    .catch(error => {
-        // Обробка помилки
-        console.error('Виникла помилка при відправленні в Телеграм:', error);
-    });
-});
+            fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: JSON.stringify(formData, null, 2)
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Дані успішно відправлені в Телеграм:', data);
+            })
+            .catch(error => {
+                console.error('Виникла помилка при відправленні в Телеграм:', error);
+            });
+        });
 
         function returnToCart() {
-            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
+            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/cash.html";
         }
     </script>
 </body>
 </html>
-
