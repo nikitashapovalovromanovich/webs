@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Опис книги "Гаррі Поттер і філософський камінь"</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+            background-image: url('https://github.com/nikitashapovalovromanovich/webs/blob/main/jpg/photo_font.jpg?raw=true');
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            display: inline-block;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #fff; 
+            background-color: #007bff; 
+            text-decoration: none; 
+            outline: none; 
+        }
+
+        button:hover {
+            background-color: #0056b3; 
+        }
+
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        img {
+            display: block;
+            margin: auto;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        p {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Гаррі Поттер і філософський камінь</h1>
+        <img src="https://raw.githubusercontent.com/nikitashapovalovromanovich/webs/main/jpg/41_1_131.jpg" alt="Книга 7">
+        <p><strong>Автор:</strong> Джоан Роулинг</p>
+        <p><strong>Опис:</strong> "Гаррі Поттер і філософський камінь" - Гаррі, сирота, живе під сходами у будинку свого дядька та тітки, Петунії та Вернона Дурслі. На даний момент він не має ніяких уявлень про те, як потрапити на платформу дев'ять і три чверті, володіти чарівною паличкою або літати на мітлі. Однак одного дня до нього прилітає сова з таємничим листом, запрошуючи його на навчання до Школи Чарівництва та Чарівництва. З цього моменту життя Гаррі радикально зміниться...
+        <p><strong>Ціна:</strong> 180 грн</p>
+        <button onclick="додатиУКошик()">Купити</button>
+        <button onclick="повернутисяНаСторінкуКаталогу()">Назад до каталогу</button>
+    </div>
+
+    <script>
+        function додатиУКошик() {
+            var книга = {
+                назва: "Гаррі Поттер і філософський камінь",
+                автор: "Джоан Роулинг",
+                ціна: 180
+            };
+
+            // Отримуємо поточний вміст кошика з localStorage
+            var поточнийКошик = localStorage.getItem("кошик");
+
+            // Перевіряємо, чи кошик існує
+            if (!поточнийКошик) {
+                // Якщо кошик порожній, створюємо новий масив для зберігання книг
+                поточнийКошик = [];
+            } else {
+                // Якщо кошик не порожній, розпарсюємо його з JSON
+                поточнийКошик = JSON.parse(поточнийКошик);
+            }
+
+            // Додаємо нову книгу у кошик
+            поточнийКошик.push(книга);
+
+            // Зберігаємо оновлений кошик у localStorage
+            localStorage.setItem("кошик", JSON.stringify(поточнийКошик));
+
+            // Повідомлення про успішне додавання у кошик
+            alert('Книга додана у кошик!');
+        }
+
+        function повернутисяНаСторінкуКаталогу() {
+            // Перенаправлення на сторінку каталогу
+            window.location.href = "шлях_до_сторінки_каталогу";
+        }
+    </script>
+</body>
+</html>

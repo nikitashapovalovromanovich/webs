@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кошик</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://github.com/nikitashapovalovromanovich/webs/blob/main/jpg/photo_font.jpg?raw=true');
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .delete-btn {
+            color: red;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        /* Стилізація кнопок */
+        button {
+            display: inline-block;
+            margin: 10px 5px 0;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #d1d7dd;
+        }
+
+        /* Змінюємо колір синьої кнопки */
+        #goToCatalog, #goToOrder {
+            background-color: #007bff;
+        }
+
+        #goToCatalog:hover, #goToOrder:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Кошик</h1>
+        <ul id="списокКошика">
+            <!-- Сюди будуть додані елементи кошика -->
+        </ul>
+        <div class="total" id="загальнаВартість"></div>
+        <button id="goToCatalog">Перейти до каталогу</button>
+        <button id="goToOrder" onclick="перейтиДоЗамовлення()">Перейти до оформлення замовлення</button>
+    </div>
+    
+    <script>
+        // Отримуємо вміст кошика з localStorage
+        var кошик = localStorage.getItem("кошик");
+
+        // Перевіряємо, чи кошик не порожній
+        if (кошик) {
+            // Розпарсюємо кошик з JSON
+            кошик = JSON.parse(кошик);
+
+            // Отримуємо елемент списку кошика
+            var списокКошика = document.getElementById("списокКошика");
+
+            // Змінна для збереження загальної вартості
+            var загальнаВартість = 0;
+
+            // Проходимося по кожній книзі у кошику
+            кошик.forEach(function(книга, індекс) {
+                // Створюємо новий елемент списку
+                var елемент = document.createElement("li");
+
+                // Заповнюємо текст для елементу списку (наприклад, назва книги та її ціна)
+                елемент.textContent = книга.назва + " - " + книга.ціна + " грн ";
+
+                // Створюємо кнопку для видалення книги
+                var кнопкаВидалення = document.createElement("button");
+                кнопкаВидалення.textContent = "Видалити";
+                кнопкаВидалення.classList.add("delete-btn");
+                кнопкаВидалення.setAttribute("data-index", індекс);
+
+                // Додаємо обробник подій для кнопки видалення
+                кнопкаВидалення.addEventListener("click", function() {
+                    видалитиЗКошика(індекс);
+                });
+
+                // Додаємо кнопку видалення до елементу списку
+                елемент.appendChild(кнопкаВидалення);
+
+                // Додаємо елемент списку до списку кошика
+                списокКошика.appendChild(елемент);
+
+                // Додаємо ціну книги до загальної вартості
+                загальнаВартість += книга.ціна;
+            });
+
+            // Відображаємо загальну вартість у відповідному блоку
+            var загальнаВартістьБлок = document.getElementById("загальнаВартість");
+            загальнаВартістьБлок.textContent = "Загальна вартість: " + загальнаВартість + " грн";
+        } else {
+            // Якщо кошик порожній, відображаємо відповідне повідомлення
+            var списокКошика = document.getElementById("списокКошика");
+            списокКошика.innerHTML = "<li>Кошик порожній</li>";
+        }
+
+        // Функція для видалення книги з кошика
+        function видалитиЗКошика(індекс) {
+            // Отримуємо вміст кошика з localStorage
+            var кошик = localStorage.getItem("кошик");
+
+            // Перевіряємо, чи кошик не порожній
+            if (кошик) {
+                // Розпарсюємо кошик з JSON
+                кошик = JSON.parse(кошик);
+
+                // Видаляємо книгу за індексом
+                кошик.splice(індекс, 1);
+
+                // Оновлюємо дані кошика у localStorage
+                localStorage.setItem("кошик", JSON.stringify(кошик));
+
+                // Оновлюємо відображення сторінки
+                location.reload();
+            }
+        }
+
+        // Функція для переходу до сторінки оформлення замовлення
+        function перейтиДоЗамовлення() {
+            // Отримуємо вміст кошика з localStorage
+            var кошик = localStorage.getItem("кошик");
+
+            // Перевіряємо, чи кошик не порожній
+            if (кошик) {
+                // Розпарсюємо кошик з JSON
+                кошик = JSON.parse(кошик);
+
+                // Зберігаємо загальну вартість у локальному сховищі
+                localStorage.setItem("загальнаВартість", JSON.stringify(загальнаВартість));
+            }
+
+            // Переходимо до сторінки оформлення замовлення
+            window.location.href = "оформлення_замовлення.html";
+        }
+    </script>
+</body>
+</html>
