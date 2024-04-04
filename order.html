@@ -155,8 +155,12 @@
                 email: email,
                 phone: phone
             };
-            tg.sendData(JSON.stringify(data));
-            tg.close();
+
+            // Або вивід повідомлення:
+            alert('Дані успішно відправлено!');
+
+            // Потім можна очистити форму:
+            document.getElementById("order-form").reset();
         });
 
         function returnToCart() {
