@@ -103,7 +103,7 @@
     <div id="main">
         <h1>Оформлення замовлення</h1>
         <form id="order-form">
-            <input type="text" placeholder="ПІБ" id="user_name" oninput="splitWords()" required>
+            <input type="text" placeholder="ПІБ" id="user_name" required>
             <div class="error" id="error-name">Ви зробили помилку в ПІБ</div>
             <input type="email" placeholder="Email" id="user_email" required>
             <div class="error" id="error-email">Ви зробили помилку в email</div>
@@ -119,49 +119,77 @@
         <div class="return-button">
             <button onclick="returnToCart()">Повернутися до кошика</button>
         </div>
+        <ul id="items-list"></ul>
     </div>
 
-
     <script>
-        function splitWords() {
-            var input = document.getElementById('user_name').value;
-            var words = input.split(' ');
-            var result = words.join(' ');
-            document.getElementById('user_name').value = result;
-        }
-        
-        // Removed Telegram related code for clarity
-        
-        document.getElementById("order-form").addEventListener("submit", (event) => {
-            event.preventDefault();
+        document.addEventListener("DOMContentLoaded", function() {
+            // Отримання кошика з локального сховища та обчислення загальної вартості
+            var кошик = localStorage.getItem("кошик");
+            var загальнаВартістьЗамовлення = 0;
 
-            document.getElementById("error").innerText = '';
-            let name = document.getElementById("user_name").value;
-            let email = document.getElementById("user_email").value;
-            let phone = document.getElementById("user_phone").value;
-            if (name.length < 5) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в імені';
-                return;
+            if (кошик) {
+                кошик = JSON.parse(кошик);
+
+                кошик.forEach(function(товар) {
+                    загальнаВартістьЗамовлення += товар.ціна;
+
+                    // Додавання товарів до списку
+                    var item = document.createElement("li");
+                    item.textContent = товар.назва;
+                    document.getElementById("items-list").appendChild(item);
+                });
             }
-            if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в email';
-                return;
-            }
-            if (phone.length < 5) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в номері телефона';
-                return;
-            }
-            
-            let data = {
-                name: name,
-                email: email,
-                phone: phone
-            };
-            // Removed Telegram related code for clarity
+
+            document.getElementById("order-total").textContent = загальнаВартістьЗамовлення.toFixed(2);
         });
 
+        document.getElementById("order-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    // Отримання даних форми
+    var formData = {
+        name: document.getElementById("user_name").value,
+        email: document.getElementById("user_email").value,
+        phone: document.getElementById("user_phone").value,
+        address: document.getElementById("user_address").value,
+        comment: document.getElementById("order_comment").value,
+        total: parseFloat(document.getElementById("order-total").textContent)
+    };
+
+    // Отримання токену вашого бота та chat_id вашого чату
+    var token = '6825098020:AAF44cUD0rKqAApWbFyY-R7tvqmJ8wuMdyc';
+    var chatId = '-4118418632';
+
+    // Відправка даних на сервер Телеграму
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            chat_id: chatId,
+            text: JSON.stringify(formData, null, 2) // Перетворення даних форми у JSON формат для відправки
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Обробка успішної відповіді від сервера Телеграму
+        console.log('Дані успішно відправлені в Телеграм:', data);
+    })
+    .catch(error => {
+        // Обробка помилки
+        console.error('Виникла помилка при відправленні в Телеграм:', error);
+    });
+});
+
         function returnToCart() {
-            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/cash.html";
+            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
         }
     </script>
 </body>
