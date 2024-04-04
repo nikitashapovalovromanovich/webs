@@ -21,7 +21,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100vh; 
         }
 
         .total {
@@ -130,43 +130,51 @@
             document.getElementById('user_name').value = result;
         }
         
+        // Повідомлення телеграму про дані замовлення
+        let name = document.getElementById('user_name').value;
+        let email = document.getElementById('user_email').value;
+        let phone = document.getElementById('user_phone').value;
+        
+        let data = {
+            name: name,
+            email: email,
+            phone: phone
+        };
+        
+        // Надсилання даних на сервер телеграму
+        tg.sendData(JSON.stringify(data));
+        
+        // Закриття з'єднання з сервером телеграму
+        tg.close();
+
         function returnToCart() {
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/cash.html";
         }
 
+        // Отримання кошика з локального сховища
         var кошик = localStorage.getItem("кошик");
         if (кошик) {
-            // Розпарсюємо кошик з JSON
             кошик = JSON.parse(кошик);
-
-            // Змінна для збереження загальної вартості замовлення
             var загальнаВартістьЗамовлення = 0;
 
-            // Проходимося по кожному товару у кошику
             кошик.forEach(function(товар) {
-                // Додаємо вартість товару до загальної вартості замовлення
                 загальнаВартістьЗамовлення += товар.ціна;
             });
 
-            // Відображаємо загальну вартість замовлення на сторінці
             document.getElementById("order-total").textContent = загальнаВартістьЗамовлення;
         }
 
+        // Відображення списку товарів у кошику
         var itemsList = document.getElementById("items-list");
-            // Проходимося по кожному товару у кошику
-            кошик.forEach(function(товар) {
-                // Створюємо новий пункт списку
-                var item = document.createElement("li");
-                // Встановлюємо текст пункту списку на основі назви товару
-                item.textContent = товар.назва;
-                // Додаємо пункт списку до списку
-                itemsList.appendChild(item);
-            });
-            function перейтиДоКошика() {
-            // Переходимо до сторінки каталогу
+        кошик.forEach(function(товар) {
+            var item = document.createElement("li");
+            item.textContent = товар.назва;
+            itemsList.appendChild(item);
+        });
+
+        function перейтиДоКошика() {
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
-        }
-        
+        }  
     </script>
 </body>
 </html>
