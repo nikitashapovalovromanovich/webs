@@ -119,8 +119,8 @@
         <div class="return-button">
             <button onclick="returnToCart()">Повернутися до кошика</button>
         </div>
+        <ul id="items-list"></ul>
     </div>
-
 
     <script>
         function splitWords() {
@@ -129,63 +129,38 @@
             var result = words.join(' ');
             document.getElementById('user_name').value = result;
         }
-        
-        // Функція для відправки даних на сервер телеграм
-        function sendToTelegram(data) {
-            // Ваш код для відправки даних на сервер телеграм
-            // Наприклад, ви можете використовувати AJAX або Fetch API для цього
-            // Приклад використання Fetch API:
-            fetch('https://example.com/telegram-endpoint', {
-                method: 'POST',
-                body: data,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Дані успішно відправлені на сервер телеграм');
-                } else {
-                    console.error('Помилка відправлення даних на сервер телеграм');
-                }
-            })
-            .catch(error => {
-                console.error('Помилка відправлення даних на сервер телеграм:', error);
-            });
-        }
-        
-        // Функція для закриття з'єднання з сервером телеграм
-        function closeTelegramConnection() {
-            // Ваш код для закриття з'єднання з сервером телеграм
-            // Наприклад, якщо ви використовуєте WebSocket, ви можете викликати метод close() для закриття з'єднання
-        }
 
-        // Функція викликається при натисканні кнопки "Оформити"
-        document.getElementById('order-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Перешкоджаємо відправленню форми стандартним способом
-            var name = document.getElementById('user_name').value;
-            var email = document.getElementById('user_email').value;
-            var phone = document.getElementById('user_phone').value;
-            var address = document.getElementById('user_address').value;
-            var comment = document.getElementById('order_comment').value;
+        document.getElementById("form").addEventListener("submit", (event) => {
+            event.preventDefault();
 
-            var data = {
+            document.getElementById("error").innerText = '';
+            let name = document.getElementById("user_name").value;
+            let email = document.getElementById("user_email").value;
+            let phone = document.getElementById("user_phone").value;
+            if (name.length < 5) {
+                document.getElementById("error").innerText = 'Ви зробили помилку в імені';
+                return;
+            }
+            if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
+                document.getElementById("error").innerText = 'Ви зробили помилку в email';
+                return;
+            }
+            if (phone.length < 5) {
+                document.getElementById("error").innerText = 'Ви зробили помилку в номері телефона';
+                return;
+            }
+            
+            let data = {
                 name: name,
                 email: email,
-                phone: phone,
-                address: address,
-                comment: comment
+                phone: phone
             };
-
-            // Конвертуємо дані у JSON-формат
-            var jsonData = JSON.stringify(data);
-
-            // Відправляємо дані на сервер телеграм
-            sendToTelegram(jsonData);
+            tg.sendData(JSON.stringify(data));
+            tg.close();
         });
 
         function returnToCart() {
-            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/cash.html";
+            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
         }
 
         // Отримання кошика з локального сховища та обчислення загальної вартості
@@ -196,23 +171,13 @@
 
             кошик.forEach(function(товар) {
                 загальнаВартістьЗамовлення += товар.ціна;
+                var item = document.createElement("li");
+                item.textContent = товар.назва;
+                document.getElementById("items-list").appendChild(item);
             });
 
             document.getElementById("order-total").textContent = загальнаВартістьЗамовлення;
         }
-
-        // Отримання списку товарів у кошику та їх відображення
-        var itemsList = document.getElementById("items-list");
-        кошик.forEach(function(товар) {
-            var item = document.createElement("li");
-            item.textContent = товар.назва;
-            itemsList.appendChild(item);
-        });
-
-        // Функція для переходу до сторінки кошика
-        function перейтиДоКошика() {
-            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
-        }  
     </script>
 </body>
 </html>
