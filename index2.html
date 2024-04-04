@@ -36,15 +36,14 @@
         }
 
         h1 {
-        margin-top: 50px;
-        margin-bottom: 20px;
-        font-size: 2.5rem;
-        color: #0ce730;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тінь для підсилення контрастності */
-        font-family: Arial, sans-serif; /* Шрифт, щоб забезпечити широку підтримку */
-        text-align: center; /* Центрування тексту */
+            margin-top: 50px;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #0ce730;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тінь для підсилення контрастності */
+            font-family: Arial, sans-serif; /* Шрифт, щоб забезпечити широку підтримку */
+            text-align: center; /* Центрування тексту */
         }
-
 
         img {
             width: 150px;
@@ -67,30 +66,29 @@
         }
 
         .product-item {
-        margin: 10px;
-        padding: 10px;
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 200px;
-        position: relative; /* Додаємо відносне позиціонування */
-        height: 350px; /* Змінюємо висоту блоку товару */
-}
+            margin: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            position: relative; /* Додаємо відносне позиціонування */
+            height: 350px; /* Змінюємо висоту блоку товару */
+        }
 
-    .product-item p {
-        margin-bottom: 10px;
-        font-size: 0.8rem;
-        color: #333;
-        font-weight: 500;
-    }
+        .product-item p {
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+            color: #333;
+            font-weight: 500;
+        }
 
-    .product-item button.buy {
-        position: absolute; /* Змінюємо на абсолютне позиціонування */
-        bottom: 10px; /* Відстань від нижнього краю */
-        left: 50%; /* Центруємо по горизонталі */
-        transform: translateX(-50%); /* Центруємо по горизонталі */
-    }
-
+        .product-item button.buy {
+            position: absolute; /* Змінюємо на абсолютне позиціонування */
+            bottom: 10px; /* Відстань від нижнього краю */
+            left: 50%; /* Центруємо по горизонталі */
+            transform: translateX(-50%); /* Центруємо по горизонталі */
+        }
 
         .product-item img {
             width: 100%;
@@ -118,28 +116,9 @@
             background-color: #0056b3; 
         }
 
-        #form {
-            text-align: center;
+        #main {
             padding: 20px;
         }
-
-        input {
-            display: block;
-            width: 80%;
-            margin: 10px auto;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc; 
-            font-size: 1rem;
-            outline: none; 
-        }
-
-        #error {
-            color: red; 
-            font-weight: bold; 
-            margin-top: 10px;
-        }
-        
 
         @media (max-width: 768px) {
             #main {
@@ -182,6 +161,8 @@
 <body>
     <div id="main">
         <h1>Каталог товарів</h1>
+        <input type="text" id="searchInput" style="width: 80%; margin: 10px auto; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; outline: none;" placeholder="Пошук товарів за назвою або автором...">
+
         <div class="product">
             <div class="product-item">
                 <img src="https://raw.githubusercontent.com/nikitashapovalovromanovich/webs/main/jpg/41_1_131.jpg" alt="Книга 7">
@@ -217,29 +198,63 @@
             </div>
         </div>
         <button id="previousPage">Перейти на попередню сторінку</button>
-    </div>
+        <button id="cartButton" onclick="перейтиДоКошика()">Перейти до кошика</button>
     </div>
     
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        let tg = window.Telegram.WebApp;
-        let buy = document.querySelectorAll(".buy");
-        let catalog = document.getElementById("main");
-        let form = document.getElementById("form");
+        let buyButtons = document.querySelectorAll(".buy");
         let previousPageButton = document.getElementById("previousPage");
-        tg.expand();
 
-        buy.forEach(btn => {
-    btn.addEventListener("click", () => {
-        // Відкриття нового сайту
-        window.location.href = "https://nikitashapovalovromanovich.github.io/webs/order.html";
-    });
-});
+        buyButtons.forEach((btn, index) => {
+            btn.addEventListener("click", () => {
+                switch (index) {
+                    case 0:
+                        window.location.href = "https://www.engvid.com/how-to-learn-more-english-with-emma/";
+                        break;
+                    case 1:
+                        window.location.href = "https://example.com/book2_purchase";
+                        break;
+                    case 2:
+                        window.location.href = "https://example.com/book3_purchase";
+                        break;
+                    case 3:
+                        window.location.href = "https://example.com/book3_purchase";
+                        break;
+                    case 4:
+                        window.location.href = "https://example.com/book3_purchase";
+                    case 5:
+                        window.location.href = "https://example.com/book3_purchase";
+                    case 6:
+                        window.location.href = "https://example.com/book3_purchase";
+                }
+            });
+        });
 
         previousPageButton.addEventListener("click", () => {
-            // Зміна URL після натискання на кнопку "Попередня сторінка"
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
         });
+
+        let searchInput = document.getElementById("searchInput");
+
+        searchInput.addEventListener("input", () => {
+            let searchValue = searchInput.value.toLowerCase().trim();
+            let productItems = document.querySelectorAll(".product-item");
+
+            productItems.forEach(item => {
+                let itemName = item.querySelector("p").textContent.toLowerCase();
+
+                if (itemName.includes(searchValue)) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        });
+
+        function перейтиДоКошика() {
+            window.location.href = "шлях_до_сторінки_кошика";
+        }
+
     </script>
 </body>
 </html>
