@@ -130,37 +130,50 @@
             document.getElementById('user_name').value = result;
         }
 
-        document.getElementById("order-form").addEventListener("submit", (event) => {
+        document.getElementById("order-form").addEventListener("submit", async (event) => {
             event.preventDefault();
 
-            document.getElementById("error").innerText = '';
+            // Отримуємо дані з форми
             let name = document.getElementById("user_name").value;
             let email = document.getElementById("user_email").value;
             let phone = document.getElementById("user_phone").value;
-            if (name.length < 5) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в імені';
-                return;
-            }
-            if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в email';
-                return;
-            }
-            if (phone.length < 5) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в номері телефона';
-                return;
-            }
-            
+            let address = document.getElementById("user_address").value;
+            let comment = document.getElementById("order_comment").value;
+            let total = document.getElementById("order-total").textContent;
+
+            // Створюємо об'єкт з отриманими даними
             let data = {
                 name: name,
                 email: email,
-                phone: phone
+                phone: phone,
+                address: address,
+                comment: comment,
+                total: total
             };
 
-            tg.sendData(JSON.stringify(data));
-            tg.close();
+            try {
+                // Виконуємо запит для відправлення даних до сервера або іншого додатку
+                let response = await fetch('https://t.me/ChooseyourbookTelegramBot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
 
+                if (response.ok) {
+                    // Дані успішно відправлені, виконуємо необхідні дії
+                    alert('Дані успішно відправлені!');
+                } else {
+                    // Виникла помилка при відправці даних
+                    alert('Виникла помилка при відправленні даних!');
+                }
+            } catch (error) {
+                // Виникла помилка при виконанні запиту
+                console.error('Помилка при відправленні даних:', error);
+                alert('Помилка при відправленні даних!');
+            }
         });
-
         function returnToCart() {
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
         }
