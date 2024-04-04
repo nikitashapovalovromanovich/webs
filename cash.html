@@ -94,7 +94,7 @@
             <!-- Сюди будуть додані елементи кошика -->
         </ul>
         <div class="total" id="загальнаВартість"></div>
-        <button id="goToCatalog">Перейти до каталогу</button>
+        <button id="goToCatalog" onclick="перейтиДоКаталогу()">Перейти до каталогу</button>
         <button id="goToOrder" onclick="перейтиДоЗамовлення()">Перейти до оформлення замовлення</button>
     </div>
     
@@ -187,8 +187,16 @@
             }
 
             // Переходимо до сторінки оформлення замовлення
-            window.location.href = "https://github.com/nikitashapovalovromanovich/webs/blob/main/order.html";
+            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/order.html";
         }
+
+            // Функція для переходу до сторінки каталогу
+            function перейтиДоКаталогу() {
+            // Переходимо до сторінки каталогу
+            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
+        }
+
+
     </script>
 </body>
 </html>
