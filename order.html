@@ -100,6 +100,7 @@
             <div class="error" id="error-address">Ви зробили помилку в адресі доставки</div>
             <textarea placeholder="Коментар до замовлення" id="order_comment"></textarea>
             <div id="error"></div>
+            <input type="text" placeholder="Книги" id="user_books" required>
             <button id="order" type="submit">Оформити</button>
         </form>
     </div>
@@ -128,6 +129,7 @@
             let phone = document.getElementById("user_phone").value;
             let address = document.getElementById("user_address").value;
             let comment = document.getElementById("order_comment").value;
+            let books = document.getElementById("user_books").value;
 
             clearErrors();
 
@@ -153,7 +155,8 @@
                 email: email,
                 phone: phone,
                 address: address,
-                comment: comment
+                comment: comment,
+                books: books
             };
             tg.sendData(JSON.stringify(data));
             tg.close();
