@@ -176,7 +176,7 @@
         // Функція для переходу до сторінки оформлення замовлення
         function перейтиДоЗамовлення() {
     // Отримуємо вміст кошика з localStorage
-    var кошик = localStorage.getItem("кошик");
+    var кошик = localStorage.setItem("кошик_total", загальнаВартість);
 
     // Перевіряємо, чи кошик не порожній
     if (кошик) {
@@ -187,6 +187,9 @@
         localStorage.setItem("кошик_total", загальнаВартість);
     }
 
+
+            window.parent.postMessage({ type: 'basket_total', total: загальнаВартість }, '*');
+
             // Переходимо до сторінки оформлення замовлення
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/order.html";
         }
@@ -196,6 +199,11 @@
             // Переходимо до сторінки каталогу
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
         }
+
+
+    </script>
+</body>
+</html>
 
 
     </script>
