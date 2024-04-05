@@ -119,9 +119,8 @@
         <div class="return-button">
             <button onclick="returnToCart()">Повернутися до кошика</button>
         </div>
-        <div id="user-info"></div>
-        <ul id="items-list"></ul>
     </div>
+
 
     <script>
         function splitWords() {
@@ -130,8 +129,23 @@
             var result = words.join(' ');
             document.getElementById('user_name').value = result;
         }
+        
+             
+        let tg = window.Telegram.WebApp;
+        let buy = document.querySelectorAll(".buy");
+        let catalog = document.getElementById("main");
+        let form = document.getElementById("form");
+    
+    tg.expand();
 
-        document.getElementById("order-form").addEventListener("submit", (event) => {
+    buy.forEach(btn => {
+            btn.addEventListener("click", () => {
+                catalog.style.display = "none";
+                form.style.display = "block";
+                document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
+            });
+        });
+        document.getElementById("form").addEventListener("submit", (event) => {
             event.preventDefault();
 
             document.getElementById("error").innerText = '';
@@ -156,17 +170,12 @@
                 email: email,
                 phone: phone
             };
-
-            document.getElementById("user-info").innerText = `Ім'я: ${name}, Email: ${email}, Телефон: ${phone}`;
-            
-            // Тут ви можете зробити додаткову обробку даних, наприклад, відправити їх на сервер або зберегти в базі даних.
-
-            // Потім можна очистити форму:
-            document.getElementById("order-form").reset();
+            tg.sendData(JSON.stringify(data));
+            tg.close();
         });
 
         function returnToCart() {
-            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
+            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/cash.html";
         }
 
         // Отримання кошика з локального сховища та обчислення загальної вартості
@@ -177,13 +186,23 @@
 
             кошик.forEach(function(товар) {
                 загальнаВартістьЗамовлення += товар.ціна;
-                var item = document.createElement("li");
-                item.textContent = товар.назва;
-                document.getElementById("items-list").appendChild(item);
             });
 
             document.getElementById("order-total").textContent = загальнаВартістьЗамовлення;
         }
+
+        // Отримання списку товарів у кошику та їх відображення
+        var itemsList = document.getElementById("items-list");
+        кошик.forEach(function(товар) {
+            var item = document.createElement("li");
+            item.textContent = товар.назва;
+            itemsList.appendChild(item);
+        });
+
+        // Функція для переходу до сторінки кошика
+        function перейтиДоКошика() {
+            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
+        }  
     </script>
 </body>
 </html>
