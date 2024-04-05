@@ -15,7 +15,7 @@
         body {
             font-family: 'Montserrat', sans-serif;
             color: #3726d8;
-            background-image: url('https://github.com/nikitashapovalovromanovich/webs/blob/main/jpg/photo_font.jpg?raw=true');
+            background-image: url('https://github.com/nikitashapovalovromanovich/webs/raw/main/jpg/photo_font.jpg');
             background-size: cover;
             background-attachment: fixed;
             display: flex;
@@ -29,7 +29,7 @@
             font-weight: bold;
             margin-top: 20px;
             text-align: center;
-            color: #ff0000; /* Змінений колір тексту на червоний */
+            color: #ff0000;
         }
 
         #main {
@@ -97,13 +97,23 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        #items-list {
+            margin-top: 20px;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        #items-list li {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
     <div id="main">
         <h1>Оформлення замовлення</h1>
         <form id="order-form">
-            <input type="text" placeholder="ПІБ" id="user_name" oninput="splitWords()" required>
+            <input type="text" placeholder="ПІБ" id="user_name" required>
             <div class="error" id="error-name">Ви зробили помилку в ПІБ</div>
             <input type="email" placeholder="Email" id="user_email" required>
             <div class="error" id="error-email">Ви зробили помилку в email</div>
@@ -115,94 +125,49 @@
             <div id="error"></div>
             <button id="order" type="submit">Оформити</button>
         </form>
-        <div class="total" id="total-order">Загальна вартість замовлення: <span id="order-total">0</span> грн</div>
+        <div class="total" id="total-order">Загальна вартість замовлення: <span id="order-total">0.00</span> грн</div>
         <div class="return-button">
             <button onclick="returnToCart()">Повернутися до кошика</button>
         </div>
+        <ul id="items-list"></ul>
     </div>
 
-
     <script>
-        function splitWords() {
-            var input = document.getElementById('user_name').value;
-            var words = input.split(' ');
-            var result = words.join(' ');
-            document.getElementById('user_name').value = result;
-        }
-        
-             
-        let tg = window.Telegram.WebApp;
-        let buy = document.querySelectorAll(".buy");
-        let catalog = document.getElementById("main");
-        let form = document.getElementById("form");
-    
-    tg.expand();
+        document.addEventListener("DOMContentLoaded", function() {
+            var корзина = localStorage.getItem("корзина");
+            var загальна_вартість_замовлення = 0;
 
-    buy.forEach(btn => {
-            btn.addEventListener("click", () => {
-                catalog.style.display = "none";
-                form.style.display = "block";
-                document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
-            });
+            if (корзина) {
+                корзина = JSON.parse(корзина);
+
+                корзина.forEach(function(товар) {
+                    загальна_вартість_замовлення += товар.ціна;
+
+                    var item = document.createElement("li");
+                    item.textContent = товар.назва;
+                    document.getElementById("items-list").appendChild(item);
+                });
+            }
+
+            document.getElementById("order-total").textContent = загальна_вартість_замовлення.toFixed(2);
         });
-        document.getElementById("form").addEventListener("submit", (event) => {
+
+        document.getElementById("order-form").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            document.getElementById("error").innerText = '';
-            let name = document.getElementById("user_name").value;
-            let email = document.getElementById("user_email").value;
-            let phone = document.getElementById("user_phone").value;
-            if (name.length < 5) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в імені';
-                return;
-            }
-            if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в email';
-                return;
-            }
-            if (phone.length < 5) {
-                document.getElementById("error").innerText = 'Ви зробили помилку в номері телефона';
-                return;
-            }
-            
-            let data = {
-                name: name,
-                email: email,
-                phone: phone
+            var formData = {
+                name: document.getElementById("user_name").value,
+                email: document.getElementById("user_email").value,
+                phone: document.getElementById("user_phone").value,
+                address: document.getElementById("user_address").value,
+                comment: document.getElementById("order_comment").value,
+                total: parseFloat(document.getElementById("order-total").textContent)
             };
-            tg.sendData(JSON.stringify(data));
-            tg.close();
         });
 
         function returnToCart() {
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/cash.html";
         }
-
-        // Отримання кошика з локального сховища та обчислення загальної вартості
-        var кошик = localStorage.getItem("кошик");
-        if (кошик) {
-            кошик = JSON.parse(кошик);
-            var загальнаВартістьЗамовлення = 0;
-
-            кошик.forEach(function(товар) {
-                загальнаВартістьЗамовлення += товар.ціна;
-            });
-
-            document.getElementById("order-total").textContent = загальнаВартістьЗамовлення;
-        }
-
-        // Отримання списку товарів у кошику та їх відображення
-        var itemsList = document.getElementById("items-list");
-        кошик.forEach(function(товар) {
-            var item = document.createElement("li");
-            item.textContent = товар.назва;
-            itemsList.appendChild(item);
-        });
-
-        // Функція для переходу до сторінки кошика
-        function перейтиДоКошика() {
-            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
-        }  
     </script>
 </body>
 </html>
