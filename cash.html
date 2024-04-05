@@ -90,82 +90,82 @@
 <body>
     <div class="container">
         <h1>Кошик</h1>
-        <ul id="cartList">
+        <ul id="списокКошика">
             <!-- Сюди будуть додані елементи кошика -->
         </ul>
-        <div class="total" id="totalPrice"></div>
-        <button id="goToCatalog" onclick="goToCatalog()">Перейти до каталогу</button>
-        <button id="goToOrder" onclick="goToOrder()">Перейти до оформлення замовлення</button>
+        <div class="total" id="загальнаВартість"></div>
+        <button id="goToCatalog" onclick="перейтиДоКаталогу()">Перейти до каталогу</button>
+        <button id="goToOrder" onclick="перейтиДоЗамовлення()">Перейти до оформлення замовлення</button>
     </div>
-
+    
     <script>
         // Отримуємо вміст кошика з localStorage
-        var cart = localStorage.getItem("cart");
+        var кошик = localStorage.getItem("кошик");
 
         // Перевіряємо, чи кошик не порожній
-        if (cart) {
+        if (кошик) {
             // Розпарсюємо кошик з JSON
-            cart = JSON.parse(cart);
+            кошик = JSON.parse(кошик);
 
             // Отримуємо елемент списку кошика
-            var cartList = document.getElementById("cartList");
+            var списокКошика = document.getElementById("списокКошика");
 
             // Змінна для збереження загальної вартості
-            var totalPrice = 0;
+            var загальнаВартість = 0;
 
             // Проходимося по кожній книзі у кошику
-            cart.forEach(function(item, index) {
+            кошик.forEach(function(книга, індекс) {
                 // Створюємо новий елемент списку
-                var element = document.createElement("li");
+                var елемент = document.createElement("li");
 
                 // Заповнюємо текст для елементу списку (наприклад, назва книги та її ціна)
-                element.textContent = item.title + " - " + item.price + " грн ";
+                елемент.textContent = книга.назва + " - " + книга.ціна + " грн ";
 
                 // Створюємо кнопку для видалення книги
-                var deleteButton = document.createElement("button");
-                deleteButton.textContent = "Видалити";
-                deleteButton.classList.add("delete-btn");
-                deleteButton.setAttribute("data-index", index);
+                var кнопкаВидалення = document.createElement("button");
+                кнопкаВидалення.textContent = "Видалити";
+                кнопкаВидалення.classList.add("delete-btn");
+                кнопкаВидалення.setAttribute("data-index", індекс);
 
                 // Додаємо обробник подій для кнопки видалення
-                deleteButton.addEventListener("click", function() {
-                    removeFromCart(index);
+                кнопкаВидалення.addEventListener("click", function() {
+                    видалитиЗКошика(індекс);
                 });
 
                 // Додаємо кнопку видалення до елементу списку
-                element.appendChild(deleteButton);
+                елемент.appendChild(кнопкаВидалення);
 
                 // Додаємо елемент списку до списку кошика
-                cartList.appendChild(element);
+                списокКошика.appendChild(елемент);
 
                 // Додаємо ціну книги до загальної вартості
-                totalPrice += item.price;
+                загальнаВартість += книга.ціна;
             });
 
             // Відображаємо загальну вартість у відповідному блоку
-            var totalPriceBlock = document.getElementById("totalPrice");
-            totalPriceBlock.textContent = "Загальна вартість: " + totalPrice + " грн";
+            var загальнаВартістьБлок = document.getElementById("загальнаВартість");
+            загальнаВартістьБлок.textContent = "Загальна вартість: " + загальнаВартість + " грн";
         } else {
             // Якщо кошик порожній, відображаємо відповідне повідомлення
-            var cartList = document.getElementById("cartList");
-            cartList.innerHTML = "<li>Кошик порожній</li>";
+            var списокКошика = document.getElementById("списокКошика");
+            списокКошика.innerHTML = "<li>Кошик порожній</li>";
         }
 
         // Функція для видалення книги з кошика
-        function removeFromCart(index) {
+        function видалитиЗКошика(індекс) {
             // Отримуємо вміст кошика з localStorage
-            var cart = localStorage.getItem("cart");
+            var кошик = localStorage.getItem("кошик");
 
             // Перевіряємо, чи кошик не порожній
-            if (cart) {
+            if (кошик) {
                 // Розпарсюємо кошик з JSON
-                cart = JSON.parse(cart);
+                кошик = JSON.parse(кошик);
 
                 // Видаляємо книгу за індексом
-                cart.splice(index, 1);
+                кошик.splice(індекс, 1);
 
                 // Оновлюємо дані кошика у localStorage
-                localStorage.setItem("cart", JSON.stringify(cart));
+                localStorage.setItem("кошик", JSON.stringify(кошик));
 
                 // Оновлюємо відображення сторінки
                 location.reload();
@@ -173,60 +173,30 @@
         }
 
         // Функція для переходу до сторінки оформлення замовлення
-        function goToOrder() {
+        function перейтиДоЗамовлення() {
             // Отримуємо вміст кошика з localStorage
-            var cart = localStorage.getItem("cart");
+            var кошик = localStorage.getItem("кошик");
 
             // Перевіряємо, чи кошик не порожній
-            if (cart) {
+            if (кошик) {
                 // Розпарсюємо кошик з JSON
-                cart = JSON.parse(cart);
+                кошик = JSON.parse(кошик);
 
                 // Зберігаємо загальну вартість у локальному сховищі
-                localStorage.setItem("total", JSON.stringify(totalPrice));
+                localStorage.setItem("загальнаВартість", JSON.stringify(загальнаВартість));
             }
 
             // Переходимо до сторінки оформлення замовлення
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/order.html";
         }
 
-        // Функція для переходу до сторінки каталогу
-        function goToCatalog() {
+            // Функція для переходу до сторінки каталогу
+            function перейтиДоКаталогу() {
             // Переходимо до сторінки каталогу
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
         }
 
+
     </script>
-
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script>
-    let tg = window.Telegram.WebApp;
-    tg.expand();
-
-    document.getElementById("order-form").addEventListener("submit", (event) => {
-        event.preventDefault();
-       
-        let order = document.getElementById("order-total").value;
-        clearErrors();
-
-        let data = {
-            order: order
-        };
-        tg.sendData(JSON.stringify(data));
-        tg.close();
-    });
-
-    function showError(id) {
-        document.getElementById(id).style.display = 'block';
-    }
-
-    function clearErrors() {
-        let errors = document.querySelectorAll('.error');
-        errors.forEach(error => {
-            error.style.display = 'none';
-        });
-    }
-</script>
-
 </body>
 </html>
