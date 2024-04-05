@@ -136,75 +136,73 @@
         }
 
         var cart = localStorage.getItem("кошик");
-        if (cart) {
-            cart = JSON.parse(cart);
-            var загальнаВартістьЗамовлення = 0;
+if (cart) {
+    cart = JSON.parse(cart);
+    var загальнаВартістьЗамовлення = 0;
 
-            cart.forEach(function(товар) {
-                загальнаВартістьЗамовлення += товар.ціна;
-            });
+    cart.forEach(function(товар) {
+        загальнаВартістьЗамовлення += товар.ціна;
+    });
 
-            document.getElementById("order-total").textContent = 'Сума вашого замовлення: ' + загальнаВартістьЗамовлення + ' грн';
-        }
-    </script>
+    // Зберігаємо суму замовлення у змінній orderTotal
+    var orderTotal = загальнаВартістьЗамовлення;
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        let tg = window.Telegram.WebApp;
-        let form = document.getElementById("main");
-        tg.expand();
+    // Виводимо суму замовлення у елемент з ідентифікатором "order-total"
+    document.getElementById("order-total").textContent = 'Сума вашого замовлення: ' + orderTotal + ' грн';
+}
 
-        document.getElementById("order-form").addEventListener("submit", (event) => {
-            event.preventDefault();
+    document.getElementById("order-form").addEventListener("submit", (event) => {
+        event.preventDefault();
 
-            let name = document.getElementById("user_name").value;
-            let email = document.getElementById("user_email").value;
-            let phone = document.getElementById("user_phone").value;
-            let address = document.getElementById("user_address").value;
-            let comment = document.getElementById("order_comment").value;
-            let order = document.getElementById("order-total").value;
+    let name = document.getElementById("user_name").value;
+    let email = document.getElementById("user_email").value;
+    let phone = document.getElementById("user_phone").value;
+    let address = document.getElementById("user_address").value;
+    let comment = document.getElementById("order_comment").value;
 
-            clearErrors();
+    clearErrors();
 
-            if (name.length < 10) {
-                showError('error-name');
-                return;
-            }
-            if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
-                showError('error-email');
-                return;
-            }
-            if (phone.length < 5) {
-                showError('error-phone');
-                return;
-            }
-            if (address.length < 10) {
-                showError('error-address');
-                return;
-            }
+    if (name.length < 10) {
+        showError('error-name');
+        return;
+    }
+    if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
+        showError('error-email');
+        return;
+    }
+    if (phone.length < 5) {
+        showError('error-phone');
+        return;
+    }
+    if (address.length < 10) {
+        showError('error-address');
+        return;
+    }
 
-            let data = {
-                name: name,
-                email: email,
-                phone: phone,
-                address: address,
-                comment: comment,
-                order_total: orderTotal
-            };
-            tg.sendData(JSON.stringify(data));
-            tg.close();
-        });
+    // Включаємо суму замовлення у об'єкт даних
+    let data = {
+        name: name,
+        email: email,
+        phone: phone,
+        address: address,
+        comment: comment,
+        order_total: orderTotal  // Збережена сума замовлення
+    };
+    tg.sendData(JSON.stringify(data));
+    tg.close();
+});
 
-        function showError(id) {
-            document.getElementById(id).style.display = 'block';
-        }
+function showError(id) {
+    document.getElementById(id).style.display = 'block';
+}
 
-        function clearErrors() {
-            let errors = document.querySelectorAll('.error');
-            errors.forEach(error => {
-                error.style.display = 'none';
-            });
-        }
+function clearErrors() {
+    let errors = document.querySelectorAll('.error');
+    errors.forEach(error => {
+        error.style.display = 'none';
+    });
+}
+
     </script>
 </body>
 </html>
