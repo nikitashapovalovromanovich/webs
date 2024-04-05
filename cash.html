@@ -94,9 +94,10 @@
             <!-- Сюди будуть додані елементи кошика -->
         </ul>
         <div class="total" id="загальнаВартість"></div>
-        <button id="goToCatalog" onclick="перейтиДоКаталогу()">Перейти до каталогу</button>
-        <button id="goToOrder" onclick="перейтиДоЗамовлення()">Перейти до оформлення замовлення</button>
-    </div>
+        <form id="order-form">
+            <input type="hidden" id="total" name="total">
+            <button type="submit">Оформити замовлення</button>
+        </form>
     
     <script>
         // Отримуємо вміст кошика з localStorage
@@ -205,7 +206,7 @@
         document.getElementById("order-form").addEventListener("submit", (event) => {
             event.preventDefault();
 
-            let total = document.getElementById("total_price").value;
+            let total = document.getElementById("total").value;
 
             clearErrors();
 
@@ -215,7 +216,7 @@
             }
 
             let data = {
-                total_price: обчислитиЗагальнуВартість()
+                total: total
             };
             tg.sendData(JSON.stringify(data));
             tg.close();
@@ -234,4 +235,3 @@
     </script>
 </body>
 </html>
-
