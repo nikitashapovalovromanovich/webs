@@ -15,13 +15,21 @@
         body {
             font-family: 'Montserrat', sans-serif;
             color: #3726d8;
-            background-image: url('https://github.com/nikitashapovalovromanovich/webs/blob/main/jpg/photo_font.jpg?raw=true');
+            background-image: url('https://github.com/nikitashapovalovromanovich/webs/raw/main/jpg/photo_font.jpg');
             background-size: cover;
             background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100vh; 
+        }
+
+        .total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            color: #ff0000;
         }
 
         #main {
@@ -79,7 +87,6 @@
             background-color: #007bff;
             text-decoration: none;
             outline: none;
-            margin-bottom: 10px;
         }
 
         button:hover {
@@ -87,16 +94,18 @@
         }
 
         .return-button {
-            display: flex;
-            justify-content: center;
+            text-align: center;
+            margin-top: 20px;
         }
 
-        /* Додано стилі для суми замовлення */
-        #order-total {
-            color: red;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-align: center;
+        #items-list {
+            margin-top: 20px;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        #items-list li {
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -104,7 +113,7 @@
     <div id="main">
         <h1>Оформлення замовлення</h1>
         <form id="order-form">
-            <input type="text" placeholder="ПІБ" id="user_name" oninput="splitWords()" required>
+            <input type="text" placeholder="ПІБ" id="user_name" required>
             <div class="error" id="error-name">Ви зробили помилку в ПІБ</div>
             <input type="email" placeholder="Email" id="user_email" required>
             <div class="error" id="error-email">Ви зробили помилку в email</div>
@@ -113,102 +122,78 @@
             <textarea placeholder="Адреса доставки" id="user_address" required></textarea>
             <div class="error" id="error-address">Ви зробили помилку в адресі доставки</div>
             <textarea placeholder="Коментар до замовлення" id="order_comment"></textarea>
-            <div id="order-total"></div> <!-- Змінено місце розташування -->
             <div id="error"></div>
             <button id="order" type="submit">Оформити</button>
         </form>
+        <div class="total" id="total-order">Загальна вартість замовлення: <span id="order-total">0.00</span> грн</div>
         <div class="return-button">
-            <button id="return-to-cart" onclick="returnToCart()">Повернутися до кошика</button>
+            <button onclick="returnToCart()">Повернутися до кошика</button>
         </div>
+        <ul id="items-list"></ul>
     </div>
 
     <script>
-        function splitWords() {
-            var input = document.getElementById('user_name').value;
-            var words = input.split(' ');
-            var result = words.join(' ');
-            document.getElementById('user_name').value = result;
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            var кошик = localStorage.getItem("кошик");
+            var загальнаВартістьЗамовлення = 0;
+
+            if (кошик) {
+                кошик = JSON.parse(кошик);
+
+                кошик.forEach(function(товар) {
+                    загальнаВартістьЗамовлення += товар.ціна;
+
+                    var item = document.createElement("li");
+                    item.textContent = товар.назва;
+                    document.getElementById("items-list").appendChild(item);
+                });
+            }
+
+            document.getElementById("order-total").textContent = загальнаВартістьЗамовлення.toFixed(2);
+        });
+
+        document.getElementById("order-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var formData = {
+                name: document.getElementById("user_name").value,
+                email: document.getElementById("user_email").value,
+                phone: document.getElementById("user_phone").value,
+                address: document.getElementById("user_address").value,
+                comment: document.getElementById("order_comment").value,
+                total: parseFloat(document.getElementById("order-total").textContent)
+            };
+
+            var token = '6825098020:AAF44cUD0rKqAApWbFyY-R7tvqmJ8wuMdyc';
+            var chatId = '-4118418632';
+
+            fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: JSON.stringify(formData, null, 2)
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Дані успішно відправлені в Телеграм:', data);
+            })
+            .catch(error => {
+                console.error('Виникла помилка при відправленні в Телеграм:', error);
+            });
+        });
 
         function returnToCart() {
-            // Здійснюємо перехід до сторінки кошика, наприклад:
-            window.location.href = 'https://nikitashapovalovromanovich.github.io/webs/cash.html';
+            window.location.href = "https://nikitashapovalovromanovich.github.io/webs/cash.html";
         }
-
-        var cart = localStorage.getItem("кошик");
-if (cart) {
-    cart = JSON.parse(cart);
-    var загальнаВартістьЗамовлення = 0;
-
-    cart.forEach(function(товар) {
-        загальнаВартістьЗамовлення += товар.ціна;
-    });
-
-    // Зберігаємо суму замовлення у змінній orderTotal
-    var orderTotal = загальнаВартістьЗамовлення;
-
-    // Виводимо суму замовлення у елемент з ідентифікатором "order-total"
-    document.getElementById("order-total").textContent = 'Сума вашого замовлення: ' + orderTotal + ' грн';
-}
-
-document.getElementById("order-form").addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    let name = document.getElementById("user_name").value;
-    let email = document.getElementById("user_email").value;
-    let phone = document.getElementById("user_phone").value;
-    let address = document.getElementById("user_address").value;
-    let comment = document.getElementById("order_comment").value;
-
-    clearErrors();
-
-    if (name.length < 10) {
-        showError('error-name');
-        return;
-    }
-    if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
-        showError('error-email');
-        return;
-    }
-    if (phone.length < 5) {
-        showError('error-phone');
-        return;
-    }
-    if (address.length < 10) {
-        showError('error-address');
-        return;
-    }
-
-    // Включаємо суму замовлення у об'єкт даних
-    let data = {
-        name: name,
-        email: email,
-        phone: phone,
-        address: address,
-        comment: comment,
-        order_total: orderTotal  // Збережена сума замовлення
-    };
-
-    // Перевіряємо, чи змінна tg визначена і має правильне значення
-    if (window.Telegram.WebApp) {
-        window.Telegram.WebApp.sendData(JSON.stringify(data));
-        window.Telegram.WebApp.close();
-    } else {
-        console.error("Telegram WebApp is not available.");
-    }
-});
-
-function showError(id) {
-    document.getElementById(id).style.display = 'block';
-}
-
-function clearErrors() {
-    let errors = document.querySelectorAll('.error');
-    errors.forEach(error => {
-        error.style.display = 'none';
-    });
-}
-
     </script>
 </body>
 </html>
