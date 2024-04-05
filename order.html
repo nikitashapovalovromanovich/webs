@@ -162,7 +162,7 @@
             let phone = document.getElementById("user_phone").value;
             let address = document.getElementById("user_address").value;
             let comment = document.getElementById("order_comment").value;
-            let order = document.getElementById("order-total").value
+            let ordertotal = document.getElementById("order-total").value
 
 
             clearErrors();
@@ -190,7 +190,7 @@
                 phone: phone,
                 address: address,
                 comment: comment,
-                order: order
+                ordertotal: ordertotal
             };
             tg.sendData(JSON.stringify(data));
             tg.close();
