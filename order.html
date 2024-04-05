@@ -162,6 +162,7 @@
             let phone = document.getElementById("user_phone").value;
             let address = document.getElementById("user_address").value;
             let comment = document.getElementById("order_comment").value;
+            let order = document.getElementById("order-total").value;
 
             clearErrors();
 
@@ -187,7 +188,8 @@
                 email: email,
                 phone: phone,
                 address: address,
-                comment: comment
+                comment: comment,
+                order_total: orderTotal
             };
             tg.sendData(JSON.stringify(data));
             tg.close();
@@ -205,4 +207,3 @@
         }
     </script>
 </body>
-</html>
