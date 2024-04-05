@@ -133,24 +133,24 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var корзина = localStorage.getItem("корзина");
-            var загальна_вартість_замовлення = 0;
+document.addEventListener("DOMContentLoaded", function() {
+    var кошик = localStorage.getItem("кошик");
+    var загальна_вартість_замовлення = 0;
 
-            if (корзина) {
-                корзина = JSON.parse(корзина);
+    if (кошик) {
+        кошик = JSON.parse(кошик);
 
-                корзина.forEach(function(товар) {
-                    загальна_вартість_замовлення += товар.ціна;
+        кошик.forEach(function(товар) {
+            загальна_вартість_замовлення += товар.ціна;
 
-                    var item = document.createElement("li");
-                    item.textContent = товар.назва;
-                    document.getElementById("items-list").appendChild(item);
-                });
-            }
-
-            document.getElementById("order-total").textContent = загальна_вартість_замовлення.toFixed(2);
+            var item = document.createElement("li");
+            item.textContent = товар.назва;
+            document.getElementById("items-list").appendChild(item);
         });
+    }
+
+    document.getElementById("order-total").textContent = загальна_вартість_замовлення.toFixed(2);
+    });
 
         document.getElementById("order-form").addEventListener("submit", function(event) {
             event.preventDefault();
