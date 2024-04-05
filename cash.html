@@ -94,14 +94,14 @@
             <!-- Сюди будуть додані елементи кошика -->
         </ul>
         <div class="total" id="загальнаВартість"></div>
-        <form id="order-form">
-            <input type="hidden" id="total" name="total">
-            <button type="submit">Оформити замовлення</button>
-        </form>
+        <button id="goToCatalog" onclick="перейтиДоКаталогу()">Перейти до каталогу</button>
+        <button id="goToOrder" onclick="перейтиДоЗамовлення()">Перейти до оформлення замовлення</button>
+    </div>
     
     <script>
         // Отримуємо вміст кошика з localStorage
         var кошик = localStorage.getItem("кошик");
+
 
         // Перевіряємо, чи кошик не порожній
         if (кошик) {
@@ -184,54 +184,20 @@
                 кошик = JSON.parse(кошик);
 
                 // Зберігаємо загальну вартість у локальному сховищі
-                localStorage.setItem("загальнаВартість", JSON.stringify(загальнаВартість));
+                localStorage.setItem("total", JSON.stringify(загальнаВартість));
             }
 
             // Переходимо до сторінки оформлення замовлення
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/order.html";
         }
 
-        // Функція для переходу до сторінки каталогу
-        function перейтиДоКаталогу() {
+            // Функція для переходу до сторінки каталогу
+            function перейтиДоКаталогу() {
             // Переходимо до сторінки каталогу
             window.location.href = "https://nikitashapovalovromanovich.github.io/webs/index.html";
         }
-    </script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        let tg = window.Telegram.WebApp;
-        let form = document.getElementById("main");
-        tg.expand();
 
-        document.getElementById("order-form").addEventListener("submit", (event) => {
-            event.preventDefault();
 
-            let total = document.getElementById("total").value;
-
-            clearErrors();
-
-            if (total.length == 0) {
-                showError('error-name');
-                return;
-            }
-
-            let data = {
-                total: total
-            };
-            tg.sendData(JSON.stringify(data));
-            tg.close();
-        });
-
-        function showError(id) {
-            document.getElementById(id).style.display = 'block';
-        }
-
-        function clearErrors() {
-            let errors = document.querySelectorAll('.error');
-            errors.forEach(error => {
-                error.style.display = 'none';
-            });
-        }
     </script>
 </body>
 </html>
