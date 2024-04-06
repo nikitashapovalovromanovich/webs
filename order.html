@@ -113,7 +113,8 @@
             <textarea placeholder="Адреса доставки" id="user_address" required></textarea>
             <div class="error" id="error-address">Ви зробили помилку в адресі доставки</div>
             <textarea placeholder="Коментар до замовлення" id="order_comment"></textarea>
-            <div id="order-total"></div> <!-- Змінено місце розташування -->
+            <div id="order-total"></div> 
+            <div id="book-name"></div> 
             <div id="error"></div>
             <button id="order" type="submit">Оформити</button>
         </form>
@@ -135,16 +136,19 @@
             window.location.href = 'https://nikitashapovalovromanovich.github.io/webs/cash.html';
         }
 
-        let cart = localStorage.getItem("кошик");
+        var cart = localStorage.getItem("кошик");
         if (cart) {
             cart = JSON.parse(cart);
-            var totalOrderPrice = 0;
+            var загальнаВартістьЗамовлення = 0;
+            var назвиКниг = [];
 
-            cart.forEach(function(item) {
-                totalOrderPrice += item.quantity * item.price;
+            cart.forEach(function(товар) {
+                загальнаВартістьЗамовлення += товар.ціна;
+                назвиКниг.push(товар.назва);
             });
 
             document.getElementById("order-total").textContent = 'Сума вашого замовлення: ' + загальнаВартістьЗамовлення + ' грн';
+            document.getElementById("book-name").textContent = 'Книги у вашому замовленні: ' + назвиКниг.join(', ');
         }
     </script>
 
@@ -162,7 +166,8 @@
             let phone = document.getElementById("user_phone").value;
             let address = document.getElementById("user_address").value;
             let comment = document.getElementById("order_comment").value;
-            let ordertotal = document.getElementById("order-total").textContent
+            let ordertotal = document.getElementById("order-total").textContent;
+            let bookname = document.getElementById("book-name").textContent 
 
 
             clearErrors();
@@ -190,8 +195,8 @@
                 phone: phone,
                 address: address,
                 comment: comment,
-                books: cart,
-                ordertotal: ordertotal
+                ordertotal: ordertotal,
+                bookname: bookname
             };
             tg.sendData(JSON.stringify(data));
             tg.close();
