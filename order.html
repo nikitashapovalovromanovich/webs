@@ -135,13 +135,13 @@
             window.location.href = 'https://nikitashapovalovromanovich.github.io/webs/cash.html';
         }
 
-        var cart = localStorage.getItem("кошик");
+        let cart = localStorage.getItem("кошик");
         if (cart) {
             cart = JSON.parse(cart);
-            var загальнаВартістьЗамовлення = 0;
+            var totalOrderPrice = 0;
 
-            cart.forEach(function(товар) {
-                загальнаВартістьЗамовлення += товар.ціна;
+            cart.forEach(function(item) {
+                totalOrderPrice += item.quantity * item.price;
             });
 
             document.getElementById("order-total").textContent = 'Сума вашого замовлення: ' + загальнаВартістьЗамовлення + ' грн';
@@ -190,6 +190,7 @@
                 phone: phone,
                 address: address,
                 comment: comment,
+                books: cart,
                 ordertotal: ordertotal
             };
             tg.sendData(JSON.stringify(data));
